@@ -1,2 +1,3 @@
-print("Hello")
-print("Welcome to Discord Bot Project")
+#bot.py
+import os
+
