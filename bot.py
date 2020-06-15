@@ -125,18 +125,18 @@ for filename in os.listdir('./cogs'):
 
 players = {}
 
-@commands.command(pass_context = True)
+@client.command()
 async def join(ctx):
     channel = ctx.message.author.voice.voice_channel
     await client.join_voice_channel(channel)
 
-@commands.command(pass_context = True)
+@client.command()
 async def leave(ctx):
     server = ctx.message.server
     voice_client = client.voice_client_in(server)
     await voice_client.disconnect()
 
-@commands.command(pass_context = True)
+@client.command()
 async def play(ctx,url):
     server = ctx.message.server
     voice_client = client.voice_client_in(server)
