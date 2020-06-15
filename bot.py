@@ -1,6 +1,7 @@
 import discord
 import os
 import json
+import youtube_dl
 from discord.ext import commands, tasks
 from itertools import cycle
 
@@ -121,5 +122,26 @@ async def reload(ctx, extension):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
+
+players = {}
+
+@commands.command(pass_context = True)
+async def join(ctx):
+    channel = ctx.message.author.voice.voice_channel
+    await client.join_voice_channel(channel)
+
+@commands.command(pass_context = True)
+async def leave(ctx):
+    server = ctx.message.server
+    voice_client = client.voice_client_in(server)
+    await voice_client.disconnect()
+
+@commands.command(pass_context = True)
+async def play(ctx,url):
+    server = ctx.message.server
+    voice_client = client.voice_client_in(server)
+    player = await voice_client.create_ytbdl_player(url)
+    players[server.id] = player
+    player.start()
 
 client.run('NzE2MDgzOTY2NjM3MjQ0NTE2.XtRsJg.yLPvDdlvXvvi_g8OuPqygScctSg')
